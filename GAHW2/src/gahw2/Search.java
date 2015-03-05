@@ -98,7 +98,12 @@ public class Search {
 		}
 		else if (Parameters.problemType.equals("OM")){
 				problem = new OneMax();
+		} 
+		//start Added by Chathika March 1 2015
+		else if (Parameters.problemType.equals("LS")){
+				problem = new LabSchedulingFunction();
 		}
+		//end Added by Chathika March 1 2015
 		else System.out.println("Invalid Problem Type");
 
 		System.out.println(problem.name);
