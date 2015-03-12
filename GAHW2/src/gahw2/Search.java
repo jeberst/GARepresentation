@@ -113,6 +113,10 @@ public class Search {
 		else if (Parameters.problemType.equals("OM")){
 				problem = new OneMax();
 		}
+                else if(Parameters.problemType.equals("RK")){
+                    
+                                problem = new LabSchedulingFunction();
+                }
 		else System.out.println("Invalid Problem Type");
 
 		System.out.println(problem.name);
@@ -166,6 +170,7 @@ public class Search {
                                 sumBestFitness = 0;
                                 sumBestFitness2 = 0;
                                
+                                
                               
 				bestOfGenChromo.rawFitness = defaultBest;
 
@@ -392,13 +397,32 @@ public class Search {
 
 					//	Crossover Two Parents to Create Two Children
 					randnum = r.nextDouble();
-					if (randnum < Parameters.xoverRate){
-						Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i+1]);
-					}
-					else {
-						Chromo.mateParents(parent1, member[parent1], child[i]);
-						Chromo.mateParents(parent2, member[parent2], child[i+1]);
-					}
+                                        
+                                        
+                                        //Probably should correct the randomization to a one time thing at instantiation.
+                                        if(Parameters.problemType.equalsIgnoreCase("RK"))
+                                        {
+                                                    if (randnum < Parameters.xoverRate)
+                                                    {
+                                                    Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i+1], member[parent1].randomizeChromo(), member[parent2].randomizeChromo());
+                                                    }
+                                                    else 
+                                                    {
+                                                            Chromo.mateParents(parent1, member[parent1], child[i]);
+                                                            Chromo.mateParents(parent2, member[parent2], child[i+1]);
+                                                    }
+                                        }
+                                        else
+                                        {
+                                        
+                                            if (randnum < Parameters.xoverRate){
+                                                    Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i+1]);
+                                            }
+                                            else {
+                                                    Chromo.mateParents(parent1, member[parent1], child[i]);
+                                                    Chromo.mateParents(parent2, member[parent2], child[i+1]);
+                                            }
+                                        }
 				} // End Crossover
 
 				//	Mutate Children

@@ -3,9 +3,6 @@
 *  Version 2, January 18, 2004
 *******************************************************************************/
 
-import java.io.*;
-import java.util.*;
-import java.text.*;
 import java.util.Arrays;
 
 public class Chromo implements Comparable<Chromo>
@@ -18,6 +15,10 @@ public class Chromo implements Comparable<Chromo>
 	public double rawFitness;
 	public double sclFitness;
 	public double proFitness;
+        private double[] randomArray = new double[Parameters.geneSize];
+        private double[] sortedRandomArray = new double[Parameters.geneSize];
+        private char[] newChromo = new char[Parameters.geneSize];
+     
 
 /*******************************************************************************
 *                            INSTANCE VARIABLES                                *
@@ -125,6 +126,21 @@ public class Chromo implements Comparable<Chromo>
 			System.out.println("ERROR - No mutation method selected");
 		}
 	}
+        
+        public double[] randomizeChromo()
+        {
+        double[] randomArray = new double[Parameters.geneSize];
+
+            for(int i=0; i< this.chromo.length(); i++)
+            {
+                randomArray[i] = Search.r.nextDouble();
+                
+            }
+            return randomArray;
+            
+        }
+        
+
 
 /*******************************************************************************
 *                             STATIC METHODS                                   *
@@ -262,6 +278,54 @@ public class Chromo implements Comparable<Chromo>
 		child.proFitness = -1;   //  Fitness not yet proportionalized
 	}
 
+        
+        public static void mateParents(int pnum1, int pnum2, Chromo parent1, Chromo parent2, Chromo child1, Chromo child2, double[] RandomKeysParent1, double[] RandomKeysParent2){
+
+		int xoverPoint1;
+		int xoverPoint2;
+
+		switch (Parameters.xoverType){
+
+		case 1:     //  Single Point Crossover
+                        double[] randomChild1 = new double[RandomKeysParent1.length];
+                        double[] randomChild2 = new double[RandomKeysParent2.length];
+			//  Select crossover point
+			xoverPoint1 = 1 + (int)(Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize-1));
+
+                        
+                        System.arraycopy(RandomKeysParent1, 0, randomChild1, 0, xoverPoint1);
+
+                        System.arraycopy(RandomKeysParent2, xoverPoint1, randomChild1, xoverPoint1, 1);
+                        
+                         System.arraycopy(RandomKeysParent2, 0, randomChild2, 0, xoverPoint1);
+
+                        System.arraycopy(RandomKeysParent1, xoverPoint1, randomChild2, xoverPoint1, 1);
+                        
+                        
+                       
+                        
+                        
+			//  Create child chromosome from parental material
+			child1.chromo = determineChromo(parent1, randomChild1);
+			child2.chromo = determineChromo(parent2, randomChild2);
+			break;
+
+		case 2:     //  Two Point Crossover
+
+		case 3:     //  Uniform Crossover
+
+		default:
+			System.out.println("ERROR - Bad crossover method selected");
+		}
+
+		//  Set fitness values back to zero
+		child1.rawFitness = -1;   //  Fitness not yet evaluated
+		child1.sclFitness = -1;   //  Fitness not yet scaled
+		child1.proFitness = -1;   //  Fitness not yet proportionalized
+		child2.rawFitness = -1;   //  Fitness not yet evaluated
+		child2.sclFitness = -1;   //  Fitness not yet scaled
+		child2.proFitness = -1;   //  Fitness not yet proportionalized
+	}
 	//  Copy one chromosome to another  ***************************************
 
 	public static void copyB2A (Chromo targetA, Chromo sourceB){
@@ -273,6 +337,36 @@ public class Chromo implements Comparable<Chromo>
 		targetA.proFitness = sourceB.proFitness;
 		return;
 	}
+        
+                public static String determineChromo(Chromo oldChromo, double[] randomKey)
+        {
+        double[] sortedRandomArray = new double[Parameters.geneSize];
+         char[] newChromo = new char[Parameters.geneSize];
+        
+            for(int i=0; i< oldChromo.chromo.length(); i++)
+            {
+                sortedRandomArray[i] = randomKey[i];
+            }
+            
+            Arrays.sort(sortedRandomArray);
+            
+            for(int j=0; j<oldChromo.chromo.length(); j++)
+            {
+                for (int k =0; k<oldChromo.chromo.length(); k++)
+                {
+                    if(sortedRandomArray[j] == randomKey[k])
+                    {
+                        newChromo[j] = oldChromo.chromo.charAt(k);
+                    }
+                }
+            }
+            String returnChromo = "";
+            for(int z=0; z<newChromo.length; z++)
+            {
+                returnChromo += newChromo[z];
+            }
+            return returnChromo;
+        }
     @Override
     public int compareTo(Chromo chrome) {
         

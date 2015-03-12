@@ -1,6 +1,6 @@
-Experiment ID                :onemax
-Problem Type                 :OM
-Data Input File Name         :NA
+Experiment ID                :RandomKeys
+Problem Type                 :RK
+Data Input File Name         :
 Number of Runs               :50
 Generations per Run          :100
 Population Size              :250
