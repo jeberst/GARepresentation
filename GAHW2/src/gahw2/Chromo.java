@@ -6,8 +6,9 @@
 import java.io.*;
 import java.util.*;
 import java.text.*;
+import java.util.Arrays;
 
-public class Chromo
+public class Chromo implements Comparable<Chromo>
 {
 /*******************************************************************************
 *                            INSTANCE VARIABLES                                *
@@ -50,10 +51,13 @@ public class Chromo
 
 /*******************************************************************************
 *                                MEMBER METHODS                                *
+     * @param chromo
 *******************************************************************************/
-
-	//  Get Alpha Represenation of a Gene **************************************
-
+  
+	
+        //  Get Alpha Represenation of a Gene **************************************
+       
+            
 	public String getGeneAlpha(int geneID){
 		int start = geneID * Parameters.geneSize;
 		int end = (geneID+1) * Parameters.geneSize;
@@ -133,7 +137,8 @@ public class Chromo
 		double rWheel = 0;
 		int j = 0;
 		int k = 0;
-
+                Chromo[] rank;
+              
 		switch (Parameters.selectType){
 
 		case 1:     // Proportional Selection
@@ -149,7 +154,58 @@ public class Chromo
 			j = (int) (randnum * Parameters.popSize);
 			return(j);
 
-		case 2:     //  Tournament Selection
+		case 2:     //  Tournament Selection     
+                        randnum = Search.r.nextDouble();
+                        int firstNum = (int)(randnum * Parameters.popSize);
+                        randnum = Search.r.nextDouble();
+                        int secondNum = (int)(randnum * Parameters.popSize);
+                        randnum = Search.r.nextDouble();
+                        
+                        int moreFit = 0;
+                        int lessFit = 0;
+                        if(Search.member[firstNum].rawFitness > Search.member[secondNum].rawFitness)
+                        {
+                            moreFit = firstNum;
+                            lessFit = secondNum;
+                        }
+                        else
+                        {
+                            moreFit = secondNum;
+                            lessFit = firstNum;
+                        }
+                        
+                        double probability = (double).025/10;
+                        if(randnum > probability){
+                            return moreFit;
+                        }
+                        else
+                        {
+                            return lessFit;
+                        }
+                        
+                    
+                case 4: //Rank Selection
+                     double rankSum = 0;
+                     rWheel = 0;
+                     double[] probabilityArray = new double[Search.member.length+1];
+                     Arrays.sort(Search.member);
+                    for (j=1; j<=Search.member.length; j++){
+				rankSum = rankSum+j;
+                                probabilityArray[j] = 0;
+			}
+                    
+                    for(int i = 1; i<=Search.member.length; i++)
+                    {
+                        probabilityArray[i] = (double)(i)/rankSum;
+                    }
+                        randnum = Search.r.nextDouble();
+			for (j=0; j<Search.member.length; j++){
+				rWheel = rWheel + probabilityArray[j+1];
+				if (randnum < rWheel) {
+                                    return(j);
+                                }
+			}
+                break;
 
 		default:
 			System.out.println("ERROR - No selection method selected");
@@ -217,5 +273,13 @@ public class Chromo
 		targetA.proFitness = sourceB.proFitness;
 		return;
 	}
+    @Override
+    public int compareTo(Chromo chrome) {
+        
+        return (int)(rawFitness - chrome.rawFitness);
+    }
+
+        
+    
 
 }   // End of Chromo.java ******************************************************

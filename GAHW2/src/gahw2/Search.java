@@ -34,13 +34,21 @@ public class Search {
 
 	public static double sumRawFitness;
 	public static double sumRawFitness2;	// sum of squares of fitness
+        public static double sumBestFitness;
+        public static double sumBestFitness2; // sum of squares of best fitness
 	public static double sumSclFitness;
 	public static double sumProFitness;
 	public static double defaultBest;
 	public static double defaultWorst;
+        public static int optimalGenerations;
+        public static int optimalGenerationsTotal;
+        public static int optimalGenerationsTotal2;
 
 	public static double averageRawFitness;
 	public static double stdevRawFitness;
+        public static double stdevBestFitness;
+        public static double averageConfidenceInterval;
+        public static double bestConfidenceInterval;
 
 	public static int G;
 	public static int R;
@@ -74,6 +82,7 @@ public class Search {
 		Date startTime = dateAndTime.getTime();
 
 	//  Read Parameter File
+                
 		System.out.println("\nParameter File Name is: " + args[0] + "\n");
 		Parameters parmValues = new Parameters(args[0]);
 
@@ -83,10 +92,15 @@ public class Search {
 		parmValues.outputParameters(summaryOutput);
 
 	//	Set up Fitness Statistics matrix
-		fitnessStats = new double[2][Parameters.generations];
+		fitnessStats = new double[7][Parameters.generations];
 		for (int i=0; i<Parameters.generations; i++){
 			fitnessStats[0][i] = 0;
 			fitnessStats[1][i] = 0;
+                        fitnessStats[2][i] = 0;
+                        fitnessStats[3][i] = 0;
+                        fitnessStats[4][i] = 0;
+                        fitnessStats[5][i] = 0;
+                        fitnessStats[6][i] = 0; 
 		}
 
 	//	Problem Specific Setup - For new new fitness function problems, create
@@ -98,12 +112,7 @@ public class Search {
 		}
 		else if (Parameters.problemType.equals("OM")){
 				problem = new OneMax();
-		} 
-		//start Added by Chathika March 1 2015
-		else if (Parameters.problemType.equals("LS")){
-				problem = new LabSchedulingFunction();
 		}
-		//end Added by Chathika March 1 2015
 		else System.out.println("Invalid Problem Type");
 
 		System.out.println(problem.name);
@@ -117,6 +126,8 @@ public class Search {
 		bestOfGenChromo = new Chromo();
 		bestOfRunChromo = new Chromo();
 		bestOverAllChromo = new Chromo();
+                optimalGenerationsTotal= 0;   
+                optimalGenerationsTotal2= 0;
 
 		if (Parameters.minORmax.equals("max")){
 			defaultBest = 0;
@@ -133,6 +144,10 @@ public class Search {
 		for (R = 1; R <= Parameters.numRuns; R++){
 
 			bestOfRunChromo.rawFitness = defaultBest;
+                        optimalGenerations = 0;
+                        
+                        double optimalGenerationsLocal = 0;
+                           
 			System.out.println();
 
 			//	Initialize First Generation
@@ -148,6 +163,10 @@ public class Search {
 				sumSclFitness = 0;
 				sumRawFitness = 0;
 				sumRawFitness2 = 0;
+                                sumBestFitness = 0;
+                                sumBestFitness2 = 0;
+                               
+                              
 				bestOfGenChromo.rawFitness = defaultBest;
 
 				//	Test Fitness of Each Member
@@ -200,8 +219,14 @@ public class Search {
 				}
 
 				// Accumulate fitness statistics
+                                
+                                sumBestFitness = sumBestFitness + bestOfGenChromo.rawFitness;
+                                sumBestFitness2 = sumBestFitness + bestOfGenChromo.rawFitness * bestOfGenChromo.rawFitness;
 				fitnessStats[0][G] += sumRawFitness / Parameters.popSize;
 				fitnessStats[1][G] += bestOfGenChromo.rawFitness;
+                                
+                                
+                                
 
 				averageRawFitness = sumRawFitness / Parameters.popSize;
 				stdevRawFitness = Math.sqrt(
@@ -210,9 +235,34 @@ public class Search {
 							/
 							(Parameters.popSize-1)
 							);
+                                
+                                fitnessStats[2][G] += stdevRawFitness;
+                                
+                                 stdevBestFitness = Math.sqrt(
+                                                        Math.abs(sumBestFitness2 - 
+							sumBestFitness*sumBestFitness/Parameters.popSize)
+							/
+							(Parameters.popSize-1)
+							);
+                                 fitnessStats[3][G] += stdevBestFitness;
+                                 
+                                 averageConfidenceInterval = 1.96*(stdevRawFitness/Math.sqrt(Parameters.popSize));
+                                 bestConfidenceInterval = 1.96*(stdevBestFitness/Math.sqrt(Parameters.popSize));
+                                 
+                                  fitnessStats[4][G] += averageConfidenceInterval;
+                                  fitnessStats[5][G] += bestConfidenceInterval;
+                                  
+                                 if(bestOfGenChromo.rawFitness == Parameters.geneSize)
+                                  {
+                                      optimalGenerations++;
+                                      optimalGenerationsTotal += G;
+                                      optimalGenerationsLocal += G;
+                                      optimalGenerationsTotal2++;
+                                      
+                                  }
 
 				// Output generation statistics to screen
-				System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness);
+				System.out.println(R + "\t" + G +  "\t" + (int)bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness + "\t" + stdevBestFitness + "\t" + averageConfidenceInterval + "\t" + bestConfidenceInterval);
 
 				// Output generation statistics to summary file
 				summaryOutput.write(" R ");
@@ -222,7 +272,15 @@ public class Search {
 				Hwrite.right((int)bestOfGenChromo.rawFitness, 7, summaryOutput);
 				Hwrite.right(averageRawFitness, 11, 3, summaryOutput);
 				Hwrite.right(stdevRawFitness, 11, 3, summaryOutput);
+                                Hwrite.right(stdevBestFitness, 11, 3, summaryOutput);
+                                Hwrite.right(averageConfidenceInterval, 11, 3, summaryOutput);
+                                Hwrite.right(bestConfidenceInterval, 11, 3, summaryOutput);
 				summaryOutput.write("\n");
+                                
+                                if(optimalGenerations > 0)
+                                {
+                                fitnessStats[6][G] = optimalGenerationsLocal/optimalGenerations;
+                                }
 
 
 		// *********************************************************************
@@ -361,6 +419,7 @@ public class Search {
 			problem.doPrintGenes(bestOfRunChromo, summaryOutput);
 
 			System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
+                        
 
 		} //End of a Run
 
@@ -369,13 +428,20 @@ public class Search {
 		problem.doPrintGenes(bestOverAllChromo, summaryOutput);
 
 		//	Output Fitness Statistics matrix
-		summaryOutput.write("Gen                 AvgFit              BestFit \n");
+		summaryOutput.write("Gen                 AvgFit              BestFit            AvgStdDev    BestStdDev     AvgAvgCI        AvgBestCI        BestGeneration\n");
 		for (int i=0; i<Parameters.generations; i++){
 			Hwrite.left(i, 15, summaryOutput);
 			Hwrite.left(fitnessStats[0][i]/Parameters.numRuns, 20, 2, summaryOutput);
 			Hwrite.left(fitnessStats[1][i]/Parameters.numRuns, 20, 2, summaryOutput);
+                        Hwrite.left(fitnessStats[2][i]/Parameters.numRuns, 20, 2, summaryOutput);
+                         Hwrite.left(fitnessStats[3][i]/Parameters.numRuns, 20, 2, summaryOutput);
+                           Hwrite.left(fitnessStats[4][i]/Parameters.numRuns, 20, 2, summaryOutput);
+                             Hwrite.left(fitnessStats[5][i]/Parameters.numRuns, 20, 2, summaryOutput);
+                              Hwrite.left(fitnessStats[6][i], 20, 2, summaryOutput);
+                             
 			summaryOutput.write("\n");
 		}
+               
 
 		summaryOutput.write("\n");
 		summaryOutput.close();
