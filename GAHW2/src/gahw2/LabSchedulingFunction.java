@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.FileWriter;
+import java.io.File;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -106,7 +107,6 @@ class LabSchedulingFunction extends FitnessFunction {
 		
 		// declare array
 		preferences = new int[numWorkers + 1][numDays][shifts_per_day];
-		System.out.println(numWorkers + " " + numDays + " " +shifts_per_day);
 		
 		for(int q = 0; q < numDays; q++){
 			for(int t = 0; t < shifts_per_day; t++){
@@ -115,7 +115,7 @@ class LabSchedulingFunction extends FitnessFunction {
 		}
 		
 		// create file reader
-		Scanner input = new Scanner(Parameters.dataInputFileName);
+		Scanner input = new Scanner(new File(Parameters.dataInputFileName));
 		
 		// fill array
 		for(int i = 1; i < numWorkers; i++){
