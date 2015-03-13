@@ -1,6 +1,6 @@
 Experiment ID                :RandomKeys
 Problem Type                 :RK
-Data Input File Name         :Schedule.txt
+Data Input File Name         :
 Number of Runs               :50
 Generations per Run          :100
 Population Size              :250
@@ -9,10 +9,10 @@ Fitness Scaling Type (2)     :0
 Crossover Type (3)           :1
 Crossover Rate (4)           :1.0
 Mutation Type (5)            :1
-Mutation Rate (6)            :0.0000
+Mutation Rate (6)            :0.0035
 Random Number Seed           :75982
 Number of Genes/Points (7)   :1
-Size of Genes (18)           :5
+Size of Genes (18)           :200
 
 Notes:
 
