@@ -15,9 +15,11 @@ public class Chromo implements Comparable<Chromo>
 	public double rawFitness;
 	public double sclFitness;
 	public double proFitness;
+	public int[] selections;
         private double[] randomArray = new double[Parameters.geneSize];
         private double[] sortedRandomArray = new double[Parameters.geneSize];
         private char[] newChromo = new char[Parameters.geneSize];
+       
      
 
 /*******************************************************************************
