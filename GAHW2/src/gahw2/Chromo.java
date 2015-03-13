@@ -19,8 +19,6 @@ public class Chromo implements Comparable<Chromo>
         private double[] randomArray = new double[Parameters.geneSize];
         private double[] sortedRandomArray = new double[Parameters.geneSize];
         private char[] newChromo = new char[Parameters.geneSize];
-        int maxShift = 5;
-        int minShift = 1;
        
      
 
@@ -39,27 +37,14 @@ public class Chromo implements Comparable<Chromo>
 		//  Set gene values to a randum sequence of 1's and 0's
 		char geneBit;
 		chromo = "";
-                if(Parameters.problemType.equalsIgnoreCase("OM"))
-                {
-                    for (int i=0; i<Parameters.numGenes; i++){
-                            for (int j=0; j<Parameters.geneSize; j++){
-                                    randnum = Search.r.nextDouble();
-                                    if (randnum > 0.5) geneBit = '0';
-                                    else geneBit = '1';
-                                    this.chromo = chromo + geneBit;
-                            }
-                    }
-                }
-                else if(Parameters.problemType.equalsIgnoreCase("RK"))
-                {
-                           for (int i=0; i<Parameters.numGenes; i++)
-                           {
-                            for (int j=0; j<Parameters.geneSize; j++){
-                                    randnum = Search.r.nextInt(maxShift-minShift+minShift) + minShift;
-                                    this.chromo = chromo + randnum;
-                            }
-                    }
-                }
+		for (int i=0; i<Parameters.numGenes; i++){
+			for (int j=0; j<Parameters.geneSize; j++){
+				randnum = Search.r.nextDouble();
+				if (randnum > 0.5) geneBit = '0';
+				else geneBit = '1';
+				this.chromo = chromo + geneBit;
+			}
+		}
 
 		this.rawFitness = -1;   //  Fitness not yet evaluated
 		this.sclFitness = -1;   //  Fitness not yet scaled
@@ -314,9 +299,13 @@ public class Chromo implements Comparable<Chromo>
 
                         System.arraycopy(RandomKeysParent2, xoverPoint1, randomChild1, xoverPoint1, 1);
                         
-                        System.arraycopy(RandomKeysParent2, 0, randomChild2, 0, xoverPoint1);
+                         System.arraycopy(RandomKeysParent2, 0, randomChild2, 0, xoverPoint1);
 
                         System.arraycopy(RandomKeysParent1, xoverPoint1, randomChild2, xoverPoint1, 1);
+                        
+                        
+                       
+                        
                         
 			//  Create child chromosome from parental material
 			child1.chromo = determineChromo(parent1, randomChild1);
@@ -351,7 +340,7 @@ public class Chromo implements Comparable<Chromo>
 		return;
 	}
         
- public static String determineChromo(Chromo oldChromo, double[] randomKey)
+                public static String determineChromo(Chromo oldChromo, double[] randomKey)
         {
         double[] sortedRandomArray = new double[Parameters.geneSize];
          char[] newChromo = new char[Parameters.geneSize];

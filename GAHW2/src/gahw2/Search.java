@@ -21,8 +21,6 @@ public class Search {
 
 	public static Chromo[] member;
 	public static Chromo[] child;
-        
-       
 
 	public static Chromo bestOfGenChromo;
 	public static int bestOfGenR;
@@ -63,7 +61,6 @@ public class Search {
 	private static double TmemberFitness;
 
 	private static double fitnessStats[][];  // 0=Avg, 1=Best
-       
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -183,8 +180,6 @@ public class Search {
 					member[i].rawFitness = 0;
 					member[i].sclFitness = 0;
 					member[i].proFitness = 0;
-                                        
-                                      
 
 					problem.doRawFitness(member[i]);
 

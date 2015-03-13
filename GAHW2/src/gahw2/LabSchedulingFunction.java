@@ -1,6 +1,5 @@
 
 import java.io.FileWriter;
-import java.util.Scanner;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,14 +28,7 @@ class LabSchedulingFunction extends FitnessFunction {
 
   public LabSchedulingFunction() {
       name = "Lab Scheduling Function";
-      try
-      {
       initialize_preferences();
-      }
-      catch(Exception e)
-      {
-         System.console().printf("Something went wrong with the file read");
-      }
   }  
   
   public void doRawFitness(Chromo X){
