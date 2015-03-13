@@ -1,4 +1,4 @@
-
+import java.util.Scanner;
 import java.io.FileWriter;
 
 /*
@@ -26,7 +26,7 @@ class LabSchedulingFunction extends FitnessFunction {
 	String[] names = new String[numWorkers];
 	
 
-  public LabSchedulingFunction() {
+  public LabSchedulingFunction() throws java.io.IOException {
       name = "Lab Scheduling Function";
       initialize_preferences();
   }  
@@ -106,10 +106,11 @@ class LabSchedulingFunction extends FitnessFunction {
 		
 		// declare array
 		preferences = new int[numWorkers + 1][numDays][shifts_per_day];
+		System.out.println(numWorkers + " " + numDays + " " +shifts_per_day);
 		
-		for(int x = 0; x < numDays; x++){
-			for(int z = 0; z < shifts_per_day; x++){
-				preferences[0][x][z] = 0; // Make all prefs invalid for Person 0, (nobody)
+		for(int q = 0; q < numDays; q++){
+			for(int t = 0; t < shifts_per_day; t++){
+				preferences[0][q][t] = 0;
 			}
 		}
 		

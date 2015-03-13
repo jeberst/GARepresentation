@@ -1,6 +1,6 @@
 Experiment ID                :RandomKeys
 Problem Type                 :RK
-Data Input File Name         :
+Data Input File Name         :testdata1.in.txt
 Number of Runs               :50
 Generations per Run          :100
 Population Size              :250
