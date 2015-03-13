@@ -21,11 +21,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			p4 = 5, 
 			p_invalid = -3400, 
 			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
-			shifts_per_day = 5,
-			numWorkers = 7,
-			numDays = 7;
-	String[] names = new String[numWorkers];
-	
+			shifts_per_day = 5;
 
   public LabSchedulingFunction() {
       name = "Lab Scheduling Function";
@@ -110,31 +106,8 @@ class LabSchedulingFunction extends FitnessFunction {
 		return;
 	}
 	
-	private void initialize_preferences() throws java.io.IOException{
-		
-		// declare array
-		preferences = new int[numWorkers + 1][numDays][shifts_per_day];
-		
-		for(int x = 0; x < numDays; x++){
-			for(int z = 0; z < shifts_per_day; x++){
-				preferences[0][x][z] = 0; // Make all prefs invalid for Person 0, (nobody)
-			}
-		}
-		
-		// create file reader
-		Scanner input = new Scanner(Parameters.dataInputFileName);
-		
-		// fill array
-		for(int i = 1; i < numWorkers; i++){
-			names[i-1] = input.nextLine(); // Read workers names if we need them for some reason
-			for(int j = 0; j < shifts_per_day; j++){
-				for (int k = 0; k < numDays; k++){
-					preferences[i][j][k] = input.nextInt(); // read each shift preference
-				}
-			}
-		}
-		
-		input.close(); // Close the file
+	private void initialize_preferences(){
+		//TODO: write code to initialize preference array
 	}
 	}
  
