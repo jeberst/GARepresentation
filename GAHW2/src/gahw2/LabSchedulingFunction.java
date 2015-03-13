@@ -121,9 +121,10 @@ class LabSchedulingFunction extends FitnessFunction {
 			names[i-1] = input.nextLine(); // Read workers names if we need them for some reason
 			for(int j = 0; j < shifts_per_day; j++){
 				for (int k = 0; k < numDays; k++){
-					preferences[i][j][k] = input.nextInt(); // read each shift preference
+					preferences[i][k][j] = input.nextInt(); // read each shift preference
 				}
 			}
+			input.nextLine();
 		}
 		
 		input.close(); // Close the file
