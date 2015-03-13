@@ -126,7 +126,6 @@ public class Search {
 		memberIndex = new int[Parameters.popSize];
 		memberFitness = new double[Parameters.popSize];
 		member = new Chromo[Parameters.popSize];
-                List<double[]> listOfRandomKeys = new ArrayList<double[]>();
 		child = new Chromo[Parameters.popSize];
 		bestOfGenChromo = new Chromo();
 		bestOfRunChromo = new Chromo();
@@ -299,7 +298,6 @@ public class Search {
 					for (int i=0; i<Parameters.popSize; i++){
 						member[i].sclFitness = member[i].rawFitness + .000001;
 						sumSclFitness += member[i].sclFitness;
-                                                listOfRandomKeys.add(member[i].randomizeChromo());
 					}
 					break;
 

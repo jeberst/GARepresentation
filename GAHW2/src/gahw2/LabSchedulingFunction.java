@@ -1,6 +1,3 @@
-
-import java.io.FileWriter;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -40,10 +37,10 @@ class LabSchedulingFunction extends FitnessFunction {
 		}
 		
 		// Loop through the genes in the chromosome
-		for (int z = 0; z < X.selections.length; z++){
+		for (int z = 0; z < X.selection.length; z++){
 			
 			// Set the array-indexing variables
-			int worker = X.selections[z]; // integer representation of gene from Chromo
+			int worker = X.selection[z]; // integer representation of gene from Chromo
 			int day = z / shifts_per_day; // gets the day of the week
 			int shift = z % shifts_per_day; // gets the shift of the day
 			
@@ -78,8 +75,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			shift_discrepencies += Math.abs(shifts_per_day - numShifts[k]); // adds the absolute difference between actual and expected shift numbers
 		}
 		
-		 X.rawFitness += shift_discrepencies * shift_penalty;
-                // Penalizes the score based on the number of shifts
+		int X.rawfitness += shift_discrepencies * shift_penalty; // Penalizes the score based on the number of shifts
 	}
 
 //PRINT OUT AN INDIVIDUAL GENE TO THE SUMMARY FILE *********************************
@@ -103,4 +99,5 @@ class LabSchedulingFunction extends FitnessFunction {
 		//TODO: write code to initialize preference array
 	}
 	}
- 
+  
+}
