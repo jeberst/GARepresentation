@@ -1,4 +1,5 @@
 
+import java.io.File;
 import java.io.FileWriter;
 import java.util.Scanner;
 
@@ -122,7 +123,10 @@ class LabSchedulingFunction extends FitnessFunction {
 		}
 		
 		// create file reader
-		Scanner input = new Scanner("Schedule.txt");
+		Scanner input = new Scanner(System.in);
+                File file = new File(Parameters.dataInputFileName);
+                
+                input = new Scanner(file);
 		
 		// fill array
 		for(int i = 1; i < numWorkers; i++){
