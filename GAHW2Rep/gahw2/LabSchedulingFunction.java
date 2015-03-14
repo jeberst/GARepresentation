@@ -1,7 +1,6 @@
-
-import java.io.File;
-import java.io.FileWriter;
 import java.util.Scanner;
+import java.io.FileWriter;
+import java.io.File;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,16 +27,9 @@ class LabSchedulingFunction extends FitnessFunction {
 	String[] names = new String[numWorkers];
 	
 
-  public LabSchedulingFunction() {
+  public LabSchedulingFunction() throws java.io.IOException {
       name = "Lab Scheduling Function";
-      try
-      {
       initialize_preferences();
-      }
-      catch(Exception e)
-      {
-          System.console().printf("Something went wrong with the preference import");
-      }
   }  
   
   public void doRawFitness(Chromo X){
@@ -116,26 +108,24 @@ class LabSchedulingFunction extends FitnessFunction {
 		// declare array
 		preferences = new int[numWorkers + 1][numDays][shifts_per_day];
 		
-		for(int x = 0; x < numDays; x++){
-			for(int z = 0; z < shifts_per_day; z++){
-				preferences[0][x][z] = 0; // Make all prefs invalid for Person 0, (nobody)
+		for(int q = 0; q < numDays; q++){
+			for(int t = 0; t < shifts_per_day; t++){
+				preferences[0][q][t] = 0;
 			}
 		}
 		
 		// create file reader
-		Scanner input = new Scanner(System.in);
-                File file = new File(Parameters.dataInputFileName);
-                
-                input = new Scanner(file);
+		Scanner input = new Scanner(new File(Parameters.dataInputFileName));
 		
 		// fill array
 		for(int i = 1; i < numWorkers; i++){
 			names[i-1] = input.nextLine(); // Read workers names if we need them for some reason
 			for(int j = 0; j < shifts_per_day; j++){
 				for (int k = 0; k < numDays; k++){
-					preferences[i][j][k] = input.nextInt(); // read each shift preference
+					preferences[i][k][j] = input.nextInt(); // read each shift preference
 				}
 			}
+			input.nextLine();
 		}
 		
 		input.close(); // Close the file
