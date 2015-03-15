@@ -117,6 +117,10 @@ public class Search {
                     
                                 problem = new LabSchedulingFunction();
                 }
+                  else if(Parameters.problemType.equals("INT")){
+                    
+                                problem = new LabSchedulingFunction();
+                }
 		else System.out.println("Invalid Problem Type");
 
 		System.out.println(problem.name);
@@ -400,7 +404,7 @@ public class Search {
 					randnum = r.nextDouble();
                                         
                                         
-                                        //Probably should correct the randomization to a one time thing at instantiation.
+                                        
                                         if(Parameters.problemType.equalsIgnoreCase("RK"))
                                         {
                                                     if (randnum < Parameters.xoverRate)

@@ -65,6 +65,17 @@ public class Chromo implements Comparable<Chromo>
 		}
                 this.randomArray = randomizeChromo();
             }
+            else if(Parameters.problemType.equalsIgnoreCase("INT"))
+            {
+               chromo = "";
+		for (int i=0; i<Parameters.numGenes; i++){
+			for (int j=0; j<Parameters.geneSize; j++){
+				randInt = Search.r.nextInt(maxShifts-minShifts + 1) + minShifts;
+				this.chromo = chromo + randInt;
+                                this.selections[j]=randInt;
+			}
+		} 
+            }
 
 		this.rawFitness = -1;   //  Fitness not yet evaluated
 		this.sclFitness = -1;   //  Fitness not yet scaled
@@ -155,10 +166,6 @@ public class Chromo implements Comparable<Chromo>
                                         y = randInt;
 				}
 				mutChromo = mutChromo + x;
-                                if(x == ' ')
-                                {
-                                    System.out.print("?");
-                                }
                                 
                                 this.selections[j] = y;
 			}
