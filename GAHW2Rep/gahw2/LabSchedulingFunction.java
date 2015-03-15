@@ -1,4 +1,4 @@
-import java.util.Scanner;
+ import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
 
@@ -15,12 +15,12 @@ import java.io.File;
 class LabSchedulingFunction extends FitnessFunction {
  
 	int[][][] preferences; // [Person][Day][Shift]
-	static int p1 = 100, 
-			p2 = 50, 
-			p3 = 25, 
-			p4 = 5, 
-			p_invalid = -3400, 
-			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
+	static int p1 = 512, 
+			p2 = 80, 
+			p3 = 40, 
+			p4 = 20, 
+			p_invalid = -4000, 
+			shift_penalty = -200, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
@@ -103,6 +103,30 @@ class LabSchedulingFunction extends FitnessFunction {
 		return;
 	}
 	
+        public static void validate(Chromo c)
+        {
+                int[] counter = new int[8];
+                 int count = 0;
+          for(int k=1; k<8; k++)
+          {
+            counter[k] = 0;
+            for( int i=0; i<c.chromo.length(); i++ ) {
+                if( c.chromo.charAt(i) == Character.forDigit(k, 10) ) {
+                    counter[k]++;
+                }
+
+            }
+          }
+          
+          for(int j=1; j<8; j++)
+          {
+             
+              count += counter[j];
+          }
+          
+          System.out.println("Done");
+        }
+        
 	private void initialize_preferences() throws java.io.IOException{
 		
 		// declare array

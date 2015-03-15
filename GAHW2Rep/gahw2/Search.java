@@ -134,7 +134,7 @@ public class Search {
                 optimalGenerationsTotal2= 0;
 
 		if (Parameters.minORmax.equals("max")){
-			defaultBest = 0;
+			defaultBest = -9999999999999.0;
 			defaultWorst = 999999999999999999999.0;
 		}
 		else{
@@ -180,6 +180,7 @@ public class Search {
 					member[i].rawFitness = 0;
 					member[i].sclFitness = 0;
 					member[i].proFitness = 0;
+                                       
 
 					problem.doRawFitness(member[i]);
 
@@ -404,7 +405,7 @@ public class Search {
                                         {
                                                     if (randnum < Parameters.xoverRate)
                                                     {
-                                                    Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i+1], member[parent1].randomizeChromo(), member[parent2].randomizeChromo());
+                                                    Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i+1], member[parent1].randomArray, member[parent2].randomArray);
                                                     }
                                                     else 
                                                     {
@@ -444,13 +445,19 @@ public class Search {
 
 			System.out.println(R + "\t" + "B" + "\t"+ (int)bestOfRunChromo.rawFitness);
                         
+                        System.out.println("Best Schedule of Run: " + bestOfRunChromo.chromo);
+                        
 
 		} //End of a Run
 
 		Hwrite.left("B", 8, summaryOutput);
 
 		problem.doPrintGenes(bestOverAllChromo, summaryOutput);
-
+                
+                LabSchedulingFunction.validate(bestOverAllChromo);
+                
+                   System.out.println("Best Schedule Overall: " + bestOverAllChromo.chromo);
+                    System.out.println("Best Fitness Overall: " + bestOverAllChromo.rawFitness);
 		//	Output Fitness Statistics matrix
 		summaryOutput.write("Gen                 AvgFit              BestFit            AvgStdDev    BestStdDev     AvgAvgCI        AvgBestCI        BestGeneration\n");
 		for (int i=0; i<Parameters.generations; i++){
