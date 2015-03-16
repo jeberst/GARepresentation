@@ -1,4 +1,4 @@
- import java.util.Scanner;
+import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
 
@@ -96,37 +96,13 @@ class LabSchedulingFunction extends FitnessFunction {
 		output.write("   RawFitness");
 		output.write("\n        ");
 		for (int i=0; i<Parameters.numGenes; i++){
-			Hwrite.right(X.getPosIntGeneValue(i),11,output);
+			Hwrite.right(X.selections[i],35,output);
 		}
 		Hwrite.right((int) X.rawFitness,13,output);
 		output.write("\n\n");
 		return;
 	}
 	
-        public static void validate(Chromo c)
-        {
-                int[] counter = new int[8];
-                 int count = 0;
-          for(int k=1; k<8; k++)
-          {
-            counter[k] = 0;
-            for( int i=0; i<c.chromo.length(); i++ ) {
-                if( c.chromo.charAt(i) == Character.forDigit(k, 10) ) {
-                    counter[k]++;
-                }
-
-            }
-          }
-          
-          for(int j=1; j<8; j++)
-          {
-             
-              count += counter[j];
-          }
-          
-          System.out.println("Done");
-        }
-        
 	private void initialize_preferences() throws java.io.IOException{
 		
 		// declare array

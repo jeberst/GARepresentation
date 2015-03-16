@@ -1,18 +1,18 @@
-Experiment ID                :INT
-Problem Type                 :INT
-Data Input File Name         :Schedule.txt
-Number of Runs               :100
+Experiment ID                :numbermatch
+Problem Type                 :NM
+Data Input File Name         :indata.NM.txt
+Number of Runs               :3
 Generations per Run          :100
 Population Size              :100
 Selection Method (1)         :1
-Fitness Scaling Type (2)     :0
+Fitness Scaling Type (2)     :1
 Crossover Type (3)           :1
-Crossover Rate (4)           :.5
-Mutation Type (5)            :2
-Mutation Rate (6)            :0.0035
+Crossover Rate (4)           :1.0
+Mutation Type (5)            :1
+Mutation Rate (6)            :.01
 Random Number Seed           :75982
-Number of Genes/Points (7)   :1
-Size of Genes (18)           :35
+Number of Genes/Points (7)   :8
+Size of Genes (18)           :9
 
 Notes:
 

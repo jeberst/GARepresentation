@@ -15,12 +15,10 @@ public class Chromo implements Comparable<Chromo>
 	public double rawFitness;
 	public double sclFitness;
 	public double proFitness;
-	public int[] selections = new int[Parameters.geneSize];
-        public double[] randomArray = new double[Parameters.geneSize];
+	public int[] selections;
+        private double[] randomArray = new double[Parameters.geneSize];
         private double[] sortedRandomArray = new double[Parameters.geneSize];
         private char[] newChromo = new char[Parameters.geneSize];
-        private         int minShifts =1;
-        private        int maxShifts = 7;
        
      
 
@@ -29,7 +27,6 @@ public class Chromo implements Comparable<Chromo>
 *******************************************************************************/
 
 	private static double randnum;
-        private static int randInt;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -38,8 +35,6 @@ public class Chromo implements Comparable<Chromo>
 	public Chromo(){
 
 		//  Set gene values to a randum sequence of 1's and 0's
-            if(Parameters.problemType.equalsIgnoreCase("OM"))
-            {
 		char geneBit;
 		chromo = "";
 		for (int i=0; i<Parameters.numGenes; i++){
@@ -50,36 +45,14 @@ public class Chromo implements Comparable<Chromo>
 				this.chromo = chromo + geneBit;
 			}
 		}
-                
-            }
-            else if (Parameters.problemType.equalsIgnoreCase("RK"))
-            {
-       
-		chromo = "";
-		for (int i=0; i<Parameters.numGenes; i++){
-			for (int j=0; j<Parameters.geneSize; j++){
-				randInt = Search.r.nextInt(maxShifts-minShifts + 1) + minShifts;
-				this.chromo = chromo + randInt;
-                                this.selections[j]=randInt;
-			}
-		}
-                this.randomArray = randomizeChromo();
-            }
-            else if(Parameters.problemType.equalsIgnoreCase("INT"))
-            {
-               chromo = "";
-		for (int i=0; i<Parameters.numGenes; i++){
-			for (int j=0; j<Parameters.geneSize; j++){
-				randInt = Search.r.nextInt(maxShifts-minShifts + 1) + minShifts;
-				this.chromo = chromo + randInt;
-                                this.selections[j]=randInt;
-			}
-		} 
-            }
 
 		this.rawFitness = -1;   //  Fitness not yet evaluated
 		this.sclFitness = -1;   //  Fitness not yet scaled
 		this.proFitness = -1;   //  Fitness not yet proportionalized
+		
+		if(Parameters.problemType.equals("LS")){
+			populate_selections_standard();
+		}
 	}
 
 
@@ -91,7 +64,7 @@ public class Chromo implements Comparable<Chromo>
 	
         //  Get Alpha Represenation of a Gene **************************************
        
-            
+           
 	public String getGeneAlpha(int geneID){
 		int start = geneID * Parameters.geneSize;
 		int end = (geneID+1) * Parameters.geneSize;
@@ -101,6 +74,13 @@ public class Chromo implements Comparable<Chromo>
 
 	//  Get Integer Value of a Gene (Positive or Negative, 2's Compliment) ****
 
+	public void populate_selections_standard(){
+		this.selections = new int[Parameters.numGenes];
+		for (int i = 0; i < Parameters.numGenes; i++){
+			this.selections[i] = getPosIntGeneValue(i);
+		}
+	}
+	
 	public int getIntGeneValue(int geneID){
 		String geneAlpha = "";
 		int geneValue;
@@ -138,7 +118,6 @@ public class Chromo implements Comparable<Chromo>
 
 		String mutChromo = "";
 		char x;
-                int y;
 
 		switch (Parameters.mutationType){
 
@@ -155,22 +134,6 @@ public class Chromo implements Comparable<Chromo>
 			}
 			this.chromo = mutChromo;
 			break;
-                case 2:
-                    	for (int j=0; j<(Parameters.geneSize * Parameters.numGenes); j++){
-				x = this.chromo.charAt(j);
-                                y = this.selections[j];
-				randnum = Search.r.nextDouble();
-                                randInt = Search.r.nextInt(maxShifts-minShifts + 1) + minShifts;
-				if (randnum < Parameters.mutationRate){
-					x = Character.forDigit(randInt, 10);
-                                        y = randInt;
-				}
-				mutChromo = mutChromo + x;
-                                
-                                this.selections[j] = y;
-			}
-			this.chromo = mutChromo;
-			break;
 
 		default:
 			System.out.println("ERROR - No mutation method selected");
@@ -179,13 +142,15 @@ public class Chromo implements Comparable<Chromo>
         
         public double[] randomizeChromo()
         {
-            double[] localRandomArray = new double[Parameters.geneSize];
+        double[] randomArray = new double[Parameters.geneSize];
+
             for(int i=0; i< this.chromo.length(); i++)
             {
-                localRandomArray[i] = Search.r.nextDouble();
+                randomArray[i] = Search.r.nextDouble();
                 
             }
-            return localRandomArray;
+            return randomArray;
+            
         }
         
 
@@ -330,6 +295,7 @@ public class Chromo implements Comparable<Chromo>
         public static void mateParents(int pnum1, int pnum2, Chromo parent1, Chromo parent2, Chromo child1, Chromo child2, double[] RandomKeysParent1, double[] RandomKeysParent2){
 
 		int xoverPoint1;
+		int xoverPoint2;
 
 		switch (Parameters.xoverType){
 
@@ -348,12 +314,13 @@ public class Chromo implements Comparable<Chromo>
 
                         System.arraycopy(RandomKeysParent1, xoverPoint1, randomChild2, xoverPoint1, 1);
                         
-     
+                        
+                       
+                        
+                        
 			//  Create child chromosome from parental material
 			child1.chromo = determineChromo(parent1, randomChild1);
-                        child1.selections = determineSelection(child1);
 			child2.chromo = determineChromo(parent2, randomChild2);
-                        child2.selections = determineSelection(child2);
 			break;
 
 		case 2:     //  Two Point Crossover
@@ -377,8 +344,6 @@ public class Chromo implements Comparable<Chromo>
 	public static void copyB2A (Chromo targetA, Chromo sourceB){
 
 		targetA.chromo = sourceB.chromo;
-                targetA.selections = sourceB.selections;
-                targetA.randomArray = sourceB.randomArray;
 
 		targetA.rawFitness = sourceB.rawFitness;
 		targetA.sclFitness = sourceB.sclFitness;
@@ -386,7 +351,7 @@ public class Chromo implements Comparable<Chromo>
 		return;
 	}
         
-public static String determineChromo(Chromo oldChromo, double[] randomKey)
+                public static String determineChromo(Chromo oldChromo, double[] randomKey)
         {
         double[] sortedRandomArray = new double[Parameters.geneSize];
          char[] newChromo = new char[Parameters.geneSize];
@@ -415,16 +380,6 @@ public static String determineChromo(Chromo oldChromo, double[] randomKey)
             }
             return returnChromo;
         }
-                
-                public static int[] determineSelection(Chromo chromo)
-                {
-                   for(int i=0; i< chromo.chromo.length(); i++)
-                   {
-                       chromo.selections[i] = Character.getNumericValue(chromo.chromo.charAt(i));
-                   }
-                   
-                   return chromo.selections;
-                }
     @Override
     public int compareTo(Chromo chrome) {
         
