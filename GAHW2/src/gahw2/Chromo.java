@@ -37,15 +37,37 @@ public class Chromo implements Comparable<Chromo>
 		//  Set gene values to a randum sequence of 1's and 0's
 		char geneBit;
 		chromo = "";
-		for (int i=0; i<Parameters.numGenes; i++){
+                /*Chathika: All non-intron problems will pass through default 
+                Chromo initialization
+                */
+		if(!Parameters.problemType.equalsIgnoreCase("introns")){
+                    for (int i=0; i<Parameters.numGenes; i++){
 			for (int j=0; j<Parameters.geneSize; j++){
 				randnum = Search.r.nextDouble();
 				if (randnum > 0.5) geneBit = '0';
 				else geneBit = '1';
 				this.chromo = chromo + geneBit;
 			}
-		}
-
+                    }
+		} else {
+                    for (int i=0; i<Parameters.numGenes; i++){
+			for (int j=0; j<Parameters.geneSize; j++){
+				randnum = Search.r.nextDouble();
+				if (randnum > 0.5) geneBit = '0';
+				else geneBit = '1';
+				this.chromo = chromo + geneBit;
+			}
+                        /*Chathika: Add introns between genes. This can be done with one loop
+                        but has been unrolled for readability purposes*/
+                        for (int j=0; j<Parameters.intronLength; j++){
+				randnum = Search.r.nextDouble();
+				if (randnum > 0.5) geneBit = '0';
+				else geneBit = '1';
+				this.chromo = chromo + geneBit;
+			}
+                        /*End Add*/
+                    }      
+                }
 		this.rawFitness = -1;   //  Fitness not yet evaluated
 		this.sclFitness = -1;   //  Fitness not yet scaled
 		this.proFitness = -1;   //  Fitness not yet proportionalized

@@ -38,6 +38,8 @@ public class Parameters
 	public static long seed;
 	public static int numGenes;
 	public static int geneSize;
+        
+        public static int intronLength;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -68,6 +70,9 @@ public class Parameters
 		seed = Long.parseLong(parmInput.readLine().substring(30).trim());
 		numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
 		geneSize = Integer.parseInt(parmInput.readLine().substring(30).trim());
+                
+                /*Chathika: Added intron length parameter to problem*/
+                intronLength = 5;
 
 		parmInput.close();
 

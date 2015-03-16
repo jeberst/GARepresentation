@@ -113,10 +113,14 @@ public class Search {
 		else if (Parameters.problemType.equals("OM")){
 				problem = new OneMax();
 		}
-                else if(Parameters.problemType.equals("RK")){
-                    
+                else if(Parameters.problemType.equals("RK")){  
                                 problem = new LabSchedulingFunction();
                 }
+                /*Chathika: Added parameter check for intron problem type*/
+                else if(Parameters.problemType.equals("introns")){  
+                                problem = new LabSchedulingFunction();
+                }
+                /*End add*/
 		else System.out.println("Invalid Problem Type");
 
 		System.out.println(problem.name);
