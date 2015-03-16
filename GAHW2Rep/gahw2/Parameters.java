@@ -38,6 +38,9 @@ public class Parameters
 	public static long seed;
 	public static int numGenes;
 	public static int geneSize;
+        
+        /**Chathika: parameter for intron length*/
+        public static int intronLength;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *
@@ -69,6 +72,9 @@ public class Parameters
 		numGenes = Integer.parseInt(parmInput.readLine().substring(30).trim());
 		geneSize = Integer.parseInt(parmInput.readLine().substring(30).trim());
 
+                /*Chathika: Added intron length parameter to problem*/
+                intronLength = 5;
+                
 		parmInput.close();
 
 		if (scaleType==0 || scaleType==2) minORmax = "max";
