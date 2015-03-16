@@ -2,6 +2,7 @@
 import java.util.Scanner;
 import java.io.FileWriter;
 import java.io.File;
+import java.util.Arrays;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -38,10 +39,7 @@ class LabSchedulingFunction extends FitnessFunction {
 
         // Initialize the number of shifts to 0 for each employee
         int[] numShifts = new int[8];
-
-        for (int i = 0; i < numShifts.length; i++) {
-            numShifts[i] = 0;
-        }
+        Arrays.fill(numShifts, 0);
 
         // Loop through the genes in the chromosome
         for (int z = 0; z < X.selections.length; z++) {
