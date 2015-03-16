@@ -398,9 +398,7 @@ public class Search {
                             Chromo.mateParents(parent2, member[parent2], child[i + 1]);
                         }
                     } else {
-                        if(member[parent1].chromo.length() != 280 || member[parent2].chromo.length() != 280 ){
-                            System.out.println("");
-                        }
+                        
                         if (randnum < Parameters.xoverRate) {
                             Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1]);
                         } else {
