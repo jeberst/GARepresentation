@@ -19,8 +19,8 @@ class LabSchedulingFunction extends FitnessFunction {
 			p2 = 50, 
 			p3 = 25, 
 			p4 = 5, 
-			p_invalid = -100, 
-			shift_penalty = -200, // TODO: We need to discuss a value for this penalty
+			p_invalid = -3500, 
+			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
