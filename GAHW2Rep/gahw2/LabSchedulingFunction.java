@@ -24,6 +24,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			shift_penalty = -1700, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
+                        p_valid = 1000,
 			numDays = 7;
 	String[] names = new String[numWorkers];
 	
@@ -33,7 +34,7 @@ class LabSchedulingFunction extends FitnessFunction {
       initialize_preferences();
   }  
   
-  public void doRawFitness(Chromo X){
+  public void doRawFitness2(Chromo X){
 	  	
 	  	// Start with 0 as the raw fitness
 		X.rawFitness = 0;
@@ -83,6 +84,71 @@ class LabSchedulingFunction extends FitnessFunction {
 		}
 		
 		 X.rawFitness += shift_discrepencies * shift_penalty; // Penalizes the score based on the number of shifts
+	}
+  
+   public void doRawFitness(Chromo X){
+	  	
+	  	// Start with 0 as the raw fitness
+		X.rawFitness = 0;
+		
+		// Initialize the number of shifts to 0 for each employee
+		int[] numShifts = new int[8];
+		
+		for (int i = 0; i < numShifts.length; i ++){
+			numShifts[i] = 0;
+		}
+		
+		boolean valid = true;
+		
+		// Loop through the genes in the chromosome
+		for (int z = 0; z < X.selections.length; z++){
+			
+			// Set the array-indexing variables
+			int worker = X.selections[z]; // integer representation of gene from Chromo
+			int day = z / shifts_per_day; // gets the day of the week
+			int shift = z % shifts_per_day; // gets the shift of the day
+			
+			// Check the preference value, reward or penalize the score accordingly
+			switch (preferences[worker][day][shift]) {
+				case 0:
+					valid = false;
+					break;
+				case 1:
+					X.rawFitness += p1;
+					break;
+				case 2:
+					X.rawFitness += p2;
+					break;
+				case 3:
+					X.rawFitness += p3;
+					break;
+				case 4:
+					X.rawFitness += p4;
+					break;
+				default:
+					break;
+			}
+			
+			// Track the shifts for this worker
+			numShifts[worker]++;
+		}
+		
+		int shift_discrepencies = numShifts[0]; // adds the shifts assigned to "Employee 0", aka Nobody
+		
+		for(int k = 1; k < numShifts.length; k++){
+			shift_discrepencies += Math.abs(shifts_per_day - numShifts[k]); // adds the absolute difference between actual and expected shift numbers
+		}
+		
+		if (shift_discrepencies != 0){
+			valid = false;
+		}
+		
+		if (valid){
+			X.rawFitness += p_valid;
+		}
+		else { 
+			X.rawFitness = (X.rawFitness / (Parameters.numGenes * p1)) * (Parameters.numGenes * p4 - 1) ; 
+		}
 	}
 
 //PRINT OUT AN INDIVIDUAL GENE TO THE SUMMARY FILE *********************************
