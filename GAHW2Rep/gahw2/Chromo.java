@@ -113,7 +113,10 @@ public class Chromo implements Comparable<Chromo> {
                     this.chromo = chromo + geneBit;
                 }
             }
+            for (int i = 0; i < Parameters.numGenes; i++){
+            	this.selections[i] = this.getPosIntGeneValue(i);
             }
+         }
 
             this.rawFitness = -1;   //  Fitness not yet evaluated
             this.sclFitness = -1;   //  Fitness not yet scaled

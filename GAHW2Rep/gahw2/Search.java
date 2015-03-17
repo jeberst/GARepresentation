@@ -124,7 +124,10 @@ public class Search {
         } else if (Parameters.problemType.equals("introns")) {
             /*Chathika: if problem parameter is introns set evaluation function accordingly*/
             problem = new LabSchedulingFunction();
-        } else {
+        } else if (Parameters.problemType.equals("CL")) {
+
+            problem = new LabSchedulingFunction();
+        }else {
             System.out.println("Invalid Problem Type");
         } 
 
