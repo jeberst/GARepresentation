@@ -18,7 +18,7 @@ public class Chromo implements Comparable<Chromo> {
     public double rawFitness;
     public double sclFitness;
     public double proFitness;
-    public int[] selections = new int[Parameters.numGenes];
+    public int[] selections = new int[Parameters.geneSize];
     public double[] randomArray = new double[Parameters.geneSize];
     private double[] sortedRandomArray = new double[Parameters.geneSize];
     private char[] newChromo = new char[Parameters.geneSize];
@@ -57,11 +57,20 @@ public class Chromo implements Comparable<Chromo> {
             this.randomArray = randomizeChromo();
         } else if (Parameters.problemType.equalsIgnoreCase("INT")) {
             chromo = "";
+            int[] numShifts = new int[maxShifts+1];
             for (int i = 0; i < Parameters.numGenes; i++) {
                 for (int j = 0; j < Parameters.geneSize; j++) {
                     randInt = Search.r.nextInt(maxShifts - minShifts + 1) + minShifts;
+                    if(numShifts[randInt] <5)
+                    {
                     this.chromo = chromo + randInt;
                     this.selections[j] = randInt;
+                    numShifts[randInt]++;
+                    }
+                    else
+                    {
+                        j--;
+                    }
                 }
             }
         } else if (Parameters.problemType.equalsIgnoreCase("introns")) {
@@ -205,6 +214,27 @@ public class Chromo implements Comparable<Chromo> {
                     this.selections[j] = y;
                 }
                 this.chromo = mutChromo;
+                break;
+            case 3:
+                
+                 for (int j = 0; j < (Parameters.geneSize * Parameters.numGenes); j++) {
+                      randnum = Search.r.nextDouble();
+                      
+                       if (randnum < Parameters.mutationRate)
+                       {
+                        int randInt1 = Search.r.nextInt(Parameters.geneSize - 1) + 1;
+                            int randInt2 = Search.r.nextInt(Parameters.geneSize - 1) + 1;
+
+                        char[] chromoArray = this.chromo.toCharArray();
+
+                        char temp = chromoArray[randInt1];
+                        chromoArray[randInt1] = chromoArray[randInt2];
+                        chromoArray[randInt2] = temp;
+
+                        String mutated = new String(chromoArray);
+                        this.chromo = mutated;
+                       }
+                 }
                 break;
 
             default:

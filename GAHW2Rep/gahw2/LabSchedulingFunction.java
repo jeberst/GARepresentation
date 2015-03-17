@@ -15,16 +15,17 @@ import java.io.File;
 class LabSchedulingFunction extends FitnessFunction {
  
 	int[][][] preferences; // [Person][Day][Shift]
-	static int p1 = 100, 
-			p2 = 50, 
+	static int p1 = 1000, 
+			p2 = 500, 
 			p3 = 25, 
 			p4 = 5, 
-			p_invalid = -3400, 
+			p_invalid = -5000, 
 			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
 	String[] names = new String[numWorkers];
+        static int invalid;
 	
 
   public LabSchedulingFunction() throws java.io.IOException {
@@ -36,6 +37,7 @@ class LabSchedulingFunction extends FitnessFunction {
 	  	
 	  	// Start with 0 as the raw fitness
 		X.rawFitness = 0;
+                invalid = 0;
 		
 		// Initialize the number of shifts to 0 for each employee
 		int[] numShifts = new int[8];
@@ -55,7 +57,8 @@ class LabSchedulingFunction extends FitnessFunction {
 			// Check the preference value, reward or penalize the score accordingly
 			switch (preferences[worker][day][shift]) {
 				case 0:
-					X.rawFitness += p_invalid;
+					//X.rawFitness += p_invalid;
+                                        invalid++;
 					break;
 				case 1:
 					X.rawFitness += p1;
@@ -83,7 +86,8 @@ class LabSchedulingFunction extends FitnessFunction {
 			shift_discrepencies += Math.abs(shifts_per_day - numShifts[k]); // adds the absolute difference between actual and expected shift numbers
 		}
 		
-		 X.rawFitness += shift_discrepencies * shift_penalty; // Penalizes the score based on the number of shifts
+		 //X.rawFitness += shift_discrepencies * shift_penalty; // Penalizes the score based on the number of shifts
+                X.rawFitness += invalid * p_invalid;
 	}
 
 //PRINT OUT AN INDIVIDUAL GENE TO THE SUMMARY FILE *********************************
@@ -122,6 +126,16 @@ class LabSchedulingFunction extends FitnessFunction {
           {
              
               count += counter[j];
+          }
+          
+          try
+          {
+              LabSchedulingFunction a = new LabSchedulingFunction();
+              a.doRawFitness(c);
+          }
+          catch(Exception E)
+          {
+              System.out.println("Error");
           }
           
           System.out.println("Done");
