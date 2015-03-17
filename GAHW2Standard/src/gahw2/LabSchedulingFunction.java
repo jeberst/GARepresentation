@@ -12,6 +12,7 @@ import java.io.File;
  *
  * @author Chathika
  */
+// Alternative (scaled) function
 class LabSchedulingFunction extends FitnessFunction {
  
 	int[][][] preferences; // [Person][Day][Shift]
@@ -19,8 +20,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			p2 = 50, 
 			p3 = 25, 
 			p4 = 5, 
-			p_invalid = -3400, 
-			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
+			p_valid = 1000;
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
@@ -44,6 +44,8 @@ class LabSchedulingFunction extends FitnessFunction {
 			numShifts[i] = 0;
 		}
 		
+		boolean valid = true;
+		
 		// Loop through the genes in the chromosome
 		for (int z = 0; z < X.selections.length; z++){
 			
@@ -55,7 +57,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			// Check the preference value, reward or penalize the score accordingly
 			switch (preferences[worker][day][shift]) {
 				case 0:
-					X.rawFitness += p_invalid;
+					valid = false;
 					break;
 				case 1:
 					X.rawFitness += p1;
@@ -83,7 +85,16 @@ class LabSchedulingFunction extends FitnessFunction {
 			shift_discrepencies += Math.abs(shifts_per_day - numShifts[k]); // adds the absolute difference between actual and expected shift numbers
 		}
 		
-		 X.rawFitness += shift_discrepencies * shift_penalty; // Penalizes the score based on the number of shifts
+		if (shift_discrepencies != 0){
+			valid = false;
+		}
+		
+		if (valid){
+			X.rawFitness += p_valid;
+		}
+		else { 
+			X.rawFitness = (X.rawFitness / (Parameters.numGenes * p1)) * (Parameters.numGenes * p4 - 1) ; 
+		}
 	}
 
 //PRINT OUT AN INDIVIDUAL GENE TO THE SUMMARY FILE *********************************

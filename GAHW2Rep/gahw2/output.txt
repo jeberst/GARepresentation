@@ -1,0 +1,17 @@
+
+Parameter File Name is: hw1.params
+
+Setting up Fitness Function.....
+Parameter File Name is: hw1.params
+
+Setting up Fitness Function.....
+Parameter File Name is: hw1.params
+
+Setting up Fitness Function.....Lab Scheduling Function
+
+Parameter File Name is: hw1.params
+
+Setting up Fitness Function.....
+Parameter File Name is: hw1.params
+
+Setting up Fitness Function.....Lab Scheduling Function
