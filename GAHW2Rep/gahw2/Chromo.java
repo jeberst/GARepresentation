@@ -127,9 +127,9 @@ public class Chromo implements Comparable<Chromo> {
             }
          }
 
-            this.rawFitness = -1;   //  Fitness not yet evaluated
-            this.sclFitness = -1;   //  Fitness not yet scaled
-            this.proFitness = -1;   //  Fitness not yet proportionalized
+            this.rawFitness = -9999999;   //  Fitness not yet evaluated
+            this.sclFitness = -9999999;   //  Fitness not yet scaled
+            this.proFitness = -9999999;   //  Fitness not yet proportionalized
         }
         /**
          * *****************************************************************************
@@ -389,12 +389,12 @@ public class Chromo implements Comparable<Chromo> {
         /*Chathika: End add*/
         
         //  Set fitness values back to zero
-        child1.rawFitness = -1;   //  Fitness not yet evaluated
-        child1.sclFitness = -1;   //  Fitness not yet scaled
-        child1.proFitness = -1;   //  Fitness not yet proportionalized
-        child2.rawFitness = -1;   //  Fitness not yet evaluated
-        child2.sclFitness = -1;   //  Fitness not yet scaled
-        child2.proFitness = -1;   //  Fitness not yet proportionalized
+        child1.rawFitness = -9999999;   //  Fitness not yet evaluated
+        child1.sclFitness = -9999999;   //  Fitness not yet scaled
+        child1.proFitness = -9999999;   //  Fitness not yet proportionalized
+        child2.rawFitness = -9999999;   //  Fitness not yet evaluated
+        child2.sclFitness = -9999999;   //  Fitness not yet scaled
+        child2.proFitness = -9999999;   //  Fitness not yet proportionalized
     }
 
     //  Produce a new child from a single parent  ******************************
@@ -403,11 +403,12 @@ public class Chromo implements Comparable<Chromo> {
         //  Create child chromosome from parental material
         child.chromo = parent.chromo;
         child.selections = parent.selections;
+        child.randomArray = parent.randomArray;
 
         //  Set fitness values back to zero
-        child.rawFitness = -1;   //  Fitness not yet evaluated
-        child.sclFitness = -1;   //  Fitness not yet scaled
-        child.proFitness = -1;   //  Fitness not yet proportionalized
+        child.rawFitness = -9999999;   //  Fitness not yet evaluated
+        child.sclFitness = -9999999;   //  Fitness not yet scaled
+        child.proFitness = -9999999;   //  Fitness not yet proportionalized
     }
 
     public static void mateParents(int pnum1, int pnum2, Chromo parent1, Chromo parent2, Chromo child1, Chromo child2, double[] RandomKeysParent1, double[] RandomKeysParent2) {
@@ -446,12 +447,12 @@ public class Chromo implements Comparable<Chromo> {
         }
 
         //  Set fitness values back to zero
-        child1.rawFitness = -1;   //  Fitness not yet evaluated
-        child1.sclFitness = -1;   //  Fitness not yet scaled
-        child1.proFitness = -1;   //  Fitness not yet proportionalized
-        child2.rawFitness = -1;   //  Fitness not yet evaluated
-        child2.sclFitness = -1;   //  Fitness not yet scaled
-        child2.proFitness = -1;   //  Fitness not yet proportionalized
+        child1.rawFitness = -9999999;   //  Fitness not yet evaluated
+        child1.sclFitness = -9999999;   //  Fitness not yet scaled
+        child1.proFitness = -9999999;   //  Fitness not yet proportionalized
+        child2.rawFitness = -9999999;   //  Fitness not yet evaluated
+        child2.sclFitness = -9999999;   //  Fitness not yet scaled
+        child2.proFitness = -9999999;   //  Fitness not yet proportionalized
     }
     //  Copy one chromosome to another  ***************************************
 
