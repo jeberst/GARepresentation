@@ -40,7 +40,7 @@ public class Parameters
 	public static int geneSize;
         
         /**Chathika: parameter for intron length*/
-        public static int intronLength;
+        public static int intronLength = 0;
 
 /*******************************************************************************
 *                              CONSTRUCTORS                                    *

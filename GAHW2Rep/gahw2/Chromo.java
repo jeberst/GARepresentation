@@ -18,7 +18,7 @@ public class Chromo implements Comparable<Chromo> {
     public double rawFitness;
     public double sclFitness;
     public double proFitness;
-    public int[] selections = new int[Parameters.geneSize];
+    public int[] selections = new int[Parameters.numGenes];
     public double[] randomArray = new double[Parameters.geneSize];
     private double[] sortedRandomArray = new double[Parameters.geneSize];
     private char[] newChromo = new char[Parameters.geneSize];
@@ -185,7 +185,10 @@ public class Chromo implements Comparable<Chromo> {
 
             case 1:     //  Replace with new random number
                 /*Had to change the for loop condition to accomodate for introns*/
-                for (int j = 0; j < ((Parameters.geneSize * Parameters.numGenes) + (Parameters.intronLength * Parameters.numGenes)); j++) {
+                /*Chathika: changed loop condition  
+                Using chromo.length() safer and straightforward.                
+                */
+                for (int j = 0; j < this.chromo.length(); j++) {
                     x = this.chromo.charAt(j);
                     randnum = Search.r.nextDouble();
                     if (randnum < Parameters.mutationRate) {
@@ -349,7 +352,9 @@ public class Chromo implements Comparable<Chromo> {
             case 1:     //  Single Point Crossover
 
                 //  Select crossover point
-                xoverPoint1 = 1 + (int) (Search.r.nextDouble() * ((Parameters.numGenes * Parameters.geneSize) + (Parameters.numGenes * Parameters.intronLength) - 1));
+                /*Chathika: changed multiplier to chromo.length safer and straightfoward                
+                */
+                xoverPoint1 = 1 + (int) (Search.r.nextDouble() * (parent1.chromo.length() - 1));
 
                 //  Create child chromosome from parental material
                 child1.chromo = parent1.chromo.substring(0, xoverPoint1) + parent2.chromo.substring(xoverPoint1);
