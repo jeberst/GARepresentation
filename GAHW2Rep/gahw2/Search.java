@@ -146,11 +146,11 @@ public class Search {
         optimalGenerationsTotal2 = 0;
 
         if (Parameters.minORmax.equals("max")) {
-            defaultBest = -9999999999999.0;
-            defaultWorst = 999999999999999999999.0;
+            defaultBest = -999999.0;
+            defaultWorst = 999999.0;
         } else {
-            defaultBest = 999999999999999999999.0;
-            defaultWorst = 0;
+            defaultBest = 999999.0;
+            defaultWorst = -999999.0;
         }
 
         bestOverAllChromo.rawFitness = defaultBest;
@@ -268,7 +268,7 @@ public class Search {
                 }
 
                 // Output generation statistics to screen
-                System.out.println(R + "\t" + G + "\t" + (int) bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness + "\t" + stdevBestFitness + "\t" + averageConfidenceInterval + "\t" + bestConfidenceInterval);
+                System.out.println(R + "\t" + G + "\t" + " BestFit: " + (int) bestOfGenChromo.rawFitness + "\t" + averageRawFitness + "\t" + stdevRawFitness + "\t" + stdevBestFitness + "\t" + averageConfidenceInterval + "\t" + bestConfidenceInterval);
 
                 // Output generation statistics to summary file
                 summaryOutput.write(" R ");
@@ -396,7 +396,7 @@ public class Search {
                     if (Parameters.problemType.equalsIgnoreCase("RK")) {
                         if (randnum < Parameters.xoverRate) {
                             //Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomArray, member[parent2].randomArray);
-                            Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomizeChromo(), member[parent2].randomizeChromo());
+                            Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomArray, member[parent2].randomArray);
                         } else {
                             Chromo.mateParents(parent1, member[parent1], child[i]);
                             Chromo.mateParents(parent2, member[parent2], child[i + 1]);

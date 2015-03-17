@@ -2,14 +2,14 @@ Experiment ID                :RK
 Problem Type                 :RK
 Data Input File Name         :Schedule.txt
 Number of Runs               :50
-Generations per Run          :100
+Generations per Run          :300
 Population Size              :250
 Selection Method (1)         :4
 Fitness Scaling Type (2)     :2
 Crossover Type (3)           :1
-Crossover Rate (4)           :0.8
+Crossover Rate (4)           :.8
 Mutation Type (5)            :3
-Mutation Rate (6)            :0.035
+Mutation Rate (6)            :0.0035
 Random Number Seed           :75982
 Number of Genes/Points (7)   :35
 Size of Genes (18)           :1
