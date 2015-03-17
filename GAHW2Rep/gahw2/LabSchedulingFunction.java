@@ -133,6 +133,15 @@ class LabSchedulingFunction extends FitnessFunction {
               count += counter[j];
           }
           
+          try
+          {
+              LabSchedulingFunction a = new LabSchedulingFunction();
+              a.doRawFitness(c);
+          }
+          catch(Exception E)
+          {
+              System.out.println("Error"); 
+          }
           System.out.println("Done");
         }
         
