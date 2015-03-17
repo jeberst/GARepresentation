@@ -249,7 +249,7 @@ public class Chromo implements Comparable<Chromo> {
     }
 
     public double[] randomizeChromo() {
-        double[] localRandomArray = new double[Parameters.geneSize];
+        double[] localRandomArray = new double[this.chromo.length()];
         for (int i = 0; i < this.chromo.length(); i++) {
             localRandomArray[i] = Search.r.nextDouble();
 
@@ -459,8 +459,8 @@ public class Chromo implements Comparable<Chromo> {
     }
 
     public static String determineChromo(Chromo oldChromo, double[] randomKey) {
-        double[] sortedRandomArray = new double[Parameters.geneSize];
-        char[] newChromo = new char[Parameters.geneSize];
+        double[] sortedRandomArray = new double[Parameters.numGenes];
+        char[] newChromo = new char[Parameters.numGenes];
 
         for (int i = 0; i < oldChromo.chromo.length(); i++) {
             sortedRandomArray[i] = randomKey[i];

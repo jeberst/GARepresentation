@@ -17,11 +17,11 @@ class LabSchedulingFunction extends FitnessFunction {
  
 	int[][][] preferences; // [Person][Day][Shift]
 	static int p1 = 100, 
-			p2 = 50, 
-			p3 = 25, 
-			p4 = 5, 
-			p_invalid = -3500, 
-			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
+			p2 = 70, 
+			p3 = 50, 
+			p4 = 25, 
+			p_invalid = -3400, 
+			shift_penalty = -1700, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
