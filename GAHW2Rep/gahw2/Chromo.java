@@ -425,11 +425,12 @@ public class Chromo implements Comparable<Chromo> {
 
                 System.arraycopy(RandomKeysParent1, 0, randomChild1, 0, xoverPoint1);
 
-                System.arraycopy(RandomKeysParent2, xoverPoint1, randomChild1, xoverPoint1, 1);
+                System.arraycopy(RandomKeysParent2, xoverPoint1, randomChild1, xoverPoint1, RandomKeysParent2.length - xoverPoint1);
+               
 
                 System.arraycopy(RandomKeysParent2, 0, randomChild2, 0, xoverPoint1);
 
-                System.arraycopy(RandomKeysParent1, xoverPoint1, randomChild2, xoverPoint1, 1);
+                System.arraycopy(RandomKeysParent1, xoverPoint1, randomChild2, xoverPoint1, RandomKeysParent1.length - xoverPoint1);
 
                 //  Create child chromosome from parental material
                 child1.chromo = determineChromo(parent1, randomChild1);
