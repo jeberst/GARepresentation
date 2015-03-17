@@ -73,6 +73,7 @@ public class Parameters
 		geneSize = Integer.parseInt(parmInput.readLine().substring(30).trim());
 
                 /*Chathika: Added intron length parameter to problem*/
+                if(problemType.equalsIgnoreCase("introns"))
                 intronLength = 5;
                 
 		parmInput.close();

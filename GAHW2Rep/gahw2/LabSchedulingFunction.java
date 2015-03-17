@@ -19,8 +19,8 @@ class LabSchedulingFunction extends FitnessFunction {
 			p2 = 50, 
 			p3 = 25, 
 			p4 = 5, 
-			p_invalid = -3400, 
-			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
+			p_invalid = -100, 
+			shift_penalty = -200, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
 			numDays = 7;
@@ -90,16 +90,26 @@ class LabSchedulingFunction extends FitnessFunction {
 
 	public void doPrintGenes(Chromo X, FileWriter output) throws java.io.IOException{
 		// TODO: adjust this function to handle various representations
-		for (int i=0; i<Parameters.numGenes; i++){
-			Hwrite.right(X.getGeneAlpha(i),11,output);
-		}
-		output.write("   RawFitness");
-		output.write("\n        ");
-		for (int i=0; i<Parameters.numGenes; i++){
-			Hwrite.right(X.getPosIntGeneValue(i),11,output);
-		}
-		Hwrite.right((int) X.rawFitness,13,output);
-		output.write("\n\n");
+		if(Parameters.problemType.equalsIgnoreCase("introns")) {
+                    Hwrite.right(Chromo.exonStringFromIntronChromo(X),11,output);
+                    output.write("   RawFitness");
+                    output.write("\n        ");
+                    for (int i=0; i<Parameters.numGenes; i++){
+                            Hwrite.right(X.selections[i],11,output);
+                    }
+                } else {
+                    for (int i=0; i<Parameters.numGenes; i++){
+                            Hwrite.right(X.getGeneAlpha(i),11,output);
+                    }
+                    output.write("   RawFitness");
+                    output.write("\n        ");
+                    for (int i=0; i<Parameters.numGenes; i++){
+                            Hwrite.right(X.getPosIntGeneValue(i),11,output);
+                    }
+                    Hwrite.right((int) X.rawFitness,13,output);
+                    output.write("\n\n");    
+                }
+                
 		return;
 	}
 	

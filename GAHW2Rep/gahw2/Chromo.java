@@ -175,7 +175,7 @@ public class Chromo implements Comparable<Chromo> {
         switch (Parameters.mutationType) {
 
             case 1:     //  Replace with new random number
-
+                /*Had to change the for loop condition to accomodate for introns*/
                 for (int j = 0; j < ((Parameters.geneSize * Parameters.numGenes) + (Parameters.intronLength * Parameters.numGenes)); j++) {
                     x = this.chromo.charAt(j);
                     randnum = Search.r.nextDouble();
@@ -276,25 +276,30 @@ public class Chromo implements Comparable<Chromo> {
                 }
 
             case 4: //Rank Selection
-                double rankSum = 0;
-                rWheel = 0;
-                double[] probabilityArray = new double[Search.member.length + 1];
-                Arrays.sort(Search.member);
-                for (j = 1; j <= Search.member.length; j++) {
-                    rankSum = rankSum + j;
-                    probabilityArray[j] = 0;
-                }
-
-                for (int i = 1; i <= Search.member.length; i++) {
-                    probabilityArray[i] = (double) (i) / rankSum;
-                }
+//                double rankSum = 0;
+//                rWheel = 0;
+//                double[] probabilityArray = new double[Search.member.length + 1];
+//                Arrays.sort(Search.member);
+//                for (j = 1; j <= Search.member.length; j++) {
+//                    rankSum = rankSum + j;
+//                    probabilityArray[j] = 0;
+//                }
+//
+//                for (int i = 1; i <= Search.member.length; i++) {
+//                    probabilityArray[i] = (double) (i) / rankSum;
+//                }
+//                randnum = Search.r.nextDouble();
+//                for (j = 0; j < Search.member.length; j++) {
+//                    rWheel = rWheel + probabilityArray[j + 1];
+//                    if (randnum < rWheel) {
+//                        return (j);
+//                    }
+//                }
                 randnum = Search.r.nextDouble();
-                for (j = 0; j < Search.member.length; j++) {
-                    rWheel = rWheel + probabilityArray[j + 1];
-                    if (randnum < rWheel) {
-                        return (j);
-                    }
-                }
+                for (j=0; j<Parameters.popSize; j++){
+                        rWheel = rWheel + (Search.member[j].sclFitness)/Search.sumSclFitness;
+                        if (randnum < rWheel) return(j);
+		}
                 break;
 
             default:
@@ -314,7 +319,7 @@ public class Chromo implements Comparable<Chromo> {
             case 1:     //  Single Point Crossover
 
                 //  Select crossover point
-                xoverPoint1 = 1 + (int) (Search.r.nextDouble() * (Parameters.numGenes * Parameters.geneSize - 1));
+                xoverPoint1 = 1 + (int) (Search.r.nextDouble() * ((Parameters.numGenes * Parameters.geneSize) + (Parameters.numGenes * Parameters.intronLength) - 1));
 
                 //  Create child chromosome from parental material
                 child1.chromo = parent1.chromo.substring(0, xoverPoint1) + parent2.chromo.substring(xoverPoint1);
@@ -454,9 +459,6 @@ public class Chromo implements Comparable<Chromo> {
     }
     /**function to filter coding gene values from introns into selections array*/
     public static void findSelectionsFromIntrons(Chromo child){
-        if(child.chromo.length()!=280){
-            System.out.println("weird length" + child.chromo.length());
-        }
         int currentGene=0;
         //Iterate through each exon gene ignoring introns
         for(int locus=0;locus<(Parameters.numGenes*Parameters.geneSize)+(Parameters.numGenes*Parameters.intronLength);locus+=(Parameters.geneSize+Parameters.intronLength)){
@@ -474,5 +476,16 @@ public class Chromo implements Comparable<Chromo> {
             child.selections[currentGene] = geneValue;
             currentGene++;
         }
+    }
+    /*Returns a string of exons for intron embedded chromosome*/
+    public static String exonStringFromIntronChromo(Chromo X) {
+        String valueString = "";
+        for(int locus=0;locus<(Parameters.numGenes*Parameters.geneSize)+(Parameters.numGenes*Parameters.intronLength);locus+=(Parameters.geneSize+Parameters.intronLength)){
+            //Obtain current exon gene as substring
+            String geneAlpha = X.chromo.substring(locus,locus+Parameters.geneSize);
+            //Add to string
+            valueString.concat(geneAlpha);            
+        }
+        return valueString;
     }
 }   // End of Chromo.java ******************************************************

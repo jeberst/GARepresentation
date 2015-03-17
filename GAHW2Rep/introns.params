@@ -1,11 +1,11 @@
-Experiment ID                :Introns
+Experiment ID                :Introns1
 Problem Type                 :introns
 Data Input File Name         :testdata1.in.txt
 Number of Runs               :50
 Generations per Run          :100
 Population Size              :250
 Selection Method (1)         :4
-Fitness Scaling Type (2)     :0
+Fitness Scaling Type (2)     :2
 Crossover Type (3)           :1
 Crossover Rate (4)           :1.0
 Mutation Type (5)            :1
