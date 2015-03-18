@@ -380,6 +380,7 @@ public class Search {
                 int parent1 = -1;
                 int parent2 = -1;
 
+               
                 //  Assumes always two offspring per mating
                 for (int i = 0; i < Parameters.popSize; i = i + 2) {
 
@@ -416,10 +417,12 @@ public class Search {
                 for (int i = 0; i < Parameters.popSize; i++) {
                     child[i].doMutation();
                 }
-
+                
                 //	Swap Children with Last Generation
                 for (int i = 0; i < Parameters.popSize; i++) {
-                    Chromo.copyB2A(member[i], child[i]);
+                    /*Chathika: Elitism of top 10%*/
+                    if(member[i].sclFitness>=Parameters.popSize/10)
+                        Chromo.copyB2A(member[i], child[i]);
                 }
 
             } //  Repeat the above loop for each generation
