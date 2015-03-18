@@ -207,7 +207,7 @@ public class Search {
                             bestOfRunR = R;
                             bestOfRunG = G;
                         }
-                        if (member[i].rawFitness > bestOverAllChromo.rawFitness) {
+                        if (member[i].rawFitness >= bestOverAllChromo.rawFitness) {
                             Chromo.copyB2A(bestOverAllChromo, member[i]);
                             bestOverAllR = R;
                             bestOverAllG = G;
