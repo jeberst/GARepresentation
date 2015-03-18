@@ -421,7 +421,7 @@ public class Search {
                 //	Swap Children with Last Generation
                 for (int i = 0; i < Parameters.popSize; i++) {
                     /*Chathika: Elitism of top 10%*/
-                    if(member[i].sclFitness>=Parameters.popSize/10)
+                    if(member[i].sclFitness<=Parameters.popSize-(Parameters.popSize/10))
                         Chromo.copyB2A(member[i], child[i]);
                 }
 
