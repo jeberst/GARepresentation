@@ -70,6 +70,10 @@ public class Chromo implements Comparable<Chromo> {
             for (int i = 0; i < Parameters.geneSize; i++) {
                 for (int j = 0; j < Parameters.numGenes; j++) {
                     randInt = Search.r.nextInt(maxShifts - minShifts + 1) + minShifts;
+                    if(randInt == 7)
+                    {
+                        System.out.print("?");
+                    }
                     if(numShifts[randInt] <5)
                     {
                     this.chromo = chromo + randInt;
@@ -410,6 +414,12 @@ public class Chromo implements Comparable<Chromo> {
         //  Create child chromosome from parental material
         child.chromo = parent.chromo;
         child.selections = parent.selections;
+        
+        for(int i=0; i<parent.selections.length; i++)
+        {
+            child.selections[i] = parent.selections[i];
+        }
+        
         child.randomArray = parent.randomArray;
 
         //  Set fitness values back to zero
@@ -467,11 +477,10 @@ public class Chromo implements Comparable<Chromo> {
     public static void copyB2A(Chromo targetA, Chromo sourceB) {
 
         targetA.chromo = sourceB.chromo;
-        targetA.selections = sourceB.selections;
         
         for(int i=0; i<targetA.selections.length; i++)
         {
-            targetA.selections = sourceB.selections;
+            targetA.selections[i] = sourceB.selections[i];
         }
         targetA.randomArray = sourceB.randomArray;
 
