@@ -21,7 +21,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			p3 = 50, 
 			p4 = 25, 
 			p_invalid = -3400, 
-			shift_penalty = -1700, // TODO: We need to discuss a value for this penalty
+			shift_penalty = -700, // TODO: We need to discuss a value for this penalty
 			shifts_per_day = 5,
 			numWorkers = 7,
                         p_valid = 1000,
@@ -226,7 +226,7 @@ class LabSchedulingFunction extends FitnessFunction {
 		Scanner input = new Scanner(new File(Parameters.dataInputFileName));
 		
 		// fill array
-		for(int i = 1; i < numWorkers; i++){
+		for(int i = 1; i < numWorkers + 1; i++){
 			names[i-1] = input.nextLine(); // Read workers names if we need them for some reason
 			for(int j = 0; j < shifts_per_day; j++){
 				for (int k = 0; k < numDays; k++){
