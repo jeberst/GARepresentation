@@ -147,7 +147,7 @@ class LabSchedulingFunction extends FitnessFunction {
 			X.rawFitness += p_valid;
 		}
 		else { 
-			X.rawFitness = (X.rawFitness / (Parameters.numGenes * p1)) * (Parameters.numGenes * p4 - 1) ; 
+			X.rawFitness = (X.rawFitness / (Parameters.numGenes * p1)) * (Parameters.numGenes * p4 - 1 + p_valid) ; 
 		}
 	}
 
