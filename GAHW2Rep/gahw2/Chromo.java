@@ -371,6 +371,13 @@ public class Chromo implements Comparable<Chromo> {
                 //  Create child chromosome from parental material
                 child1.chromo = parent1.chromo.substring(0, xoverPoint1) + parent2.chromo.substring(xoverPoint1);
                 child2.chromo = parent2.chromo.substring(0, xoverPoint1) + parent1.chromo.substring(xoverPoint1);
+                
+                if(Parameters.problemType.equalsIgnoreCase("INT") || Parameters.problemType.equalsIgnoreCase("RK"))
+                {
+                    child1.selections = determineSelection(child1);
+                    child2.selections = determineSelection(child2);
+                }
+                
                 break;
 
             case 2:     //  Two Point Crossover
@@ -461,6 +468,11 @@ public class Chromo implements Comparable<Chromo> {
 
         targetA.chromo = sourceB.chromo;
         targetA.selections = sourceB.selections;
+        
+        for(int i=0; i<targetA.selections.length; i++)
+        {
+            targetA.selections = sourceB.selections;
+        }
         targetA.randomArray = sourceB.randomArray;
 
         targetA.rawFitness = sourceB.rawFitness;
