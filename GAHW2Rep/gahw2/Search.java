@@ -121,7 +121,7 @@ public class Search {
         } else if (Parameters.problemType.equals("INT")) {
 
             problem = new LabSchedulingFunction();
-        } else if (Parameters.problemType.equals("introns")) {
+        } else if (Parameters.problemType.equals("LSi")) {
             /*Chathika: if problem parameter is introns set evaluation function accordingly*/
             problem = new LabSchedulingFunction();
         } else if (Parameters.problemType.equals("CL")) {

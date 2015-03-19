@@ -155,7 +155,7 @@ class LabSchedulingFunction extends FitnessFunction {
 
 	public void doPrintGenes(Chromo X, FileWriter output) throws java.io.IOException{
 		// TODO: adjust this function to handle various representations
-		if(Parameters.problemType.equalsIgnoreCase("introns")) {
+		if(Parameters.problemType.equalsIgnoreCase("LSi")) {
                     Hwrite.right(Chromo.exonStringFromIntronChromo(X),11,output);
                     output.write("   RawFitness");
                     output.write("\n        ");

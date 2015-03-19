@@ -86,7 +86,7 @@ public class Chromo implements Comparable<Chromo> {
                     }
                 }
             }
-        } else if (Parameters.problemType.equalsIgnoreCase("introns")) {
+        } else if (Parameters.problemType.equalsIgnoreCase("LSi")) {
             /*Chathika: Initilization for the case of introns*/
             for (int i = 0; i < Parameters.numGenes; i++) {
                 for (int j = 0; j < Parameters.geneSize; j++) {
@@ -393,7 +393,7 @@ public class Chromo implements Comparable<Chromo> {
         }
         
         /*Chathika: in the case of introns revaluate the coding gene values*/
-        if(Parameters.problemType.equalsIgnoreCase("introns")){
+        if(Parameters.problemType.equalsIgnoreCase("LSi")){
             findSelectionsFromIntrons(child1);
             findSelectionsFromIntrons(child2);
         }
