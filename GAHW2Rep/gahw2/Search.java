@@ -396,8 +396,8 @@ public class Search {
 
                     if (Parameters.problemType.equalsIgnoreCase("RK")) {
                         if (randnum < Parameters.xoverRate) {
+                            Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomizeChromo(), member[parent2].randomizeChromo());
                             //Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomArray, member[parent2].randomArray);
-                            Chromo.mateParents(parent1, parent2, member[parent1], member[parent2], child[i], child[i + 1], member[parent1].randomArray, member[parent2].randomArray);
                         } else {
                             Chromo.mateParents(parent1, member[parent1], child[i]);
                             Chromo.mateParents(parent2, member[parent2], child[i + 1]);
